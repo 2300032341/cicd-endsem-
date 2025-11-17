@@ -29,12 +29,19 @@ jobs:
           path: dist  # Vite always outputs to dist/
 
   deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
+    deploy:
+  runs-on: ubuntu-latest
+  needs: build
+  permissions:
+    pages: write
+    id-token: write
 
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+  steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: github-pages
+        path: .
+
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v4
